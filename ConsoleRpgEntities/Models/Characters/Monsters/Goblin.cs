@@ -9,7 +9,15 @@ namespace ConsoleRpgEntities.Models.Characters.Monsters
         public override void Attack(ITargetable target)
         {
             // Goblin-specific attack logic
-            Console.WriteLine($"{Name} sneaks up and attacks {target.Name}!");
+            int damage = Sneakiness * AggressionLevel / 2;
+            Console.WriteLine($"{Name} sneaks up and attacks {target.Name} dealing {damage} damage!");
+            if (target is Player player)
+            {
+                int defense = player.Equipments.Armor.Defense;
+                damage = damage - defense;
+                Console.WriteLine($"Player has {player.Equipments.Armor.Name}, so player loses {damage} health points.");
+                player.Health -= damage;
+            }
         }
     }
 }

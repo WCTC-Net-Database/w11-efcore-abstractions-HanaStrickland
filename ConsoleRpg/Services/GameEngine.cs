@@ -68,6 +68,21 @@ public class GameEngine
             _player.Attack(targetableGoblin);
             _player.UseAbility(_player.Abilities.First(), targetableGoblin);
         }
+
+        if (_player is ITargetable targetablePlayer)
+        {
+            _goblin.Attack(targetablePlayer);
+        }
+
+        if (_goblin is Goblin goblin && _player is Player player)
+        {
+            Console.WriteLine($"{goblin.Name} has {goblin.Health} left.");
+            Console.WriteLine($"{player.Name} has {player.Health} left.");
+
+            _context.Update(goblin);
+            _context.Update(player);
+            _context.SaveChanges();
+        }
     }
 
     private void SetupGame()
